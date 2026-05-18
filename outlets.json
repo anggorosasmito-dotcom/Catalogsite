@@ -1,0 +1,470 @@
+[
+  {
+    "code": "C4008",
+    "name": "JURANG PASTEUR",
+    "city": "BANDUNG",
+    "region": "BANDUNG",
+    "address": "Jl. Jurang No.51B, Pasteur, Kec. Sukajadi, Kota Bandung, Jawa Barat 40161",
+    "maps": "https://maps.app.goo.gl/j3es9mHbhJxcZP636",
+    "wa": "https://wa.me/62859667154590"
+  },
+  {
+    "code": "C5011",
+    "name": "PLUTO",
+    "city": "BANDUNG",
+    "region": "BANDUNG",
+    "address": "Jl. Pluto Raya No.35 E, RT.04/RW.13, Margasari, Kec. Buahbatu Bandung, Jawa Barat, 40286",
+    "maps": "https://maps.app.goo.gl/rchmnSvAKfnzHeG49",
+    "wa": "https://wa.me/62819442195640"
+  },
+  {
+    "code": "C5013",
+    "name": "HARMONY",
+    "city": "BANDUNG",
+    "region": "BANDUNG",
+    "address": "Ruko Harmony Park No.4 Jl Ciwanstra No.86 Margahayu Endah Rancasari Kota Bandung Jawa Barat, 40292",
+    "maps": "https://maps.app.goo.gl/mS2iE8GtMrvGyRe28",
+    "wa": "https://wa.me/62877227248240"
+  },
+  {
+    "code": "C5015",
+    "name": "KOPO PERMAI 3",
+    "city": "BANDUNG",
+    "region": "BANDUNG",
+    "address": "Ruko Kopo Permai, Jl. Kopo Permai III No.F8/7, Cangkuang Kulon, Kec. Dayeuhkolot, Kabupaten Bandung, Jawa Barat 40227",
+    "maps": "https://maps.app.goo.gl/Sc3JcjJHtwN5JoBw9",
+    "wa": "https://wa.me/62877227248270"
+  },
+  {
+    "code": "C5014",
+    "name": "TKI 3",
+    "city": "BANDUNG",
+    "region": "BANDUNG",
+    "address": "Jl. Taman Kopo Indah 3 No.F-12A, Mekar Rahayu, Kec.Margaasih Kabupaten Bandung, Jawa Barat, 40218",
+    "maps": "https://maps.app.goo.gl/HTc1hu3s2adAU7mX7",
+    "wa": "https://wa.me/62819498731640"
+  },
+  {
+    "code": "C5016",
+    "name": "ISTANA SUDIRMAN",
+    "city": "BANDUNG",
+    "region": "BANDUNG",
+    "address": "Ruko Istana Sudirman Residen, Jl. Raya Cijerah No.11A, Cibuntu, Kec. Bandung Kulon 40212",
+    "maps": "https://maps.app.goo.gl/WiLPY4Eq6GpoW6Vk8",
+    "wa": "https://wa.me/62877002933650"
+  },
+  {
+    "code": "C5001",
+    "name": "CBD CIBUBUR",
+    "city": "BEKASI",
+    "region": "JABODETABEK",
+    "address": "Ruko CBD Citra Grand Blok ER 2 No 6 Jati Rangga Kec Jatisampurna Kota Bekasi, Jawa Barat 17434",
+    "maps": "https://maps.app.goo.gl/MKMTX6h5EwD4VYh19",
+    "wa": "https://wa.me/6281752001410"
+  },
+  {
+    "code": "C5004",
+    "name": "PERMATA CIBUBUR",
+    "city": "BOGOR",
+    "region": "JABODETABEK",
+    "address": "Ruko Permata Cibubur, Jl. Raya Permata Cibubur No. 6 Blok F.05, Cileungsi Kidul, Kec. Cileungsi, Kabupaten Bogor, Jawa Barat 16820",
+    "maps": "https://maps.app.goo.gl/JNEUxD692oGLcMiM7",
+    "wa": "https://wa.me/62819442147400"
+  },
+  {
+    "code": "C4002",
+    "name": "TARUMA",
+    "city": "KARAWANG",
+    "region": "JABODETABEK",
+    "address": "Ruko Grand Taruma, Jl. Darmawangsa III No.10 D/9 - D/10, Sukamakmur, Teluk Jambe Timur, Karawang, Jawa Barat 41361",
+    "maps": "https://maps.app.goo.gl/aScJsXL1SAERoPKk9",
+    "wa": "https://wa.me/62877227248090"
+  },
+  {
+    "code": "F5004",
+    "name": "KETINTANG",
+    "city": "SURABAYA",
+    "region": "SURABAYA",
+    "address": "Ruko OP, Jl Ketintang Baru No 50 E RT 12 RW 03 Kel. Ketintang , Kec. Gayungan Kota Surabaya, Jawa Timur, 60231",
+    "maps": "https://maps.app.goo.gl/Z7egzeXwwyz8w3jXA",
+    "wa": "https://wa.me/6281752001360"
+  },
+  {
+    "code": "B5007",
+    "name": "FIORENZA CIKUPA",
+    "city": "TANGERANG",
+    "region": "JABODETABEK",
+    "address": "Ruko Fiorenza, JL. Raya H. Cinde Lakoni No.17 / 52 Blok P, Ciakar, Kec. Cikupa, Kabupaten Tangerang, Banten 15710",
+    "maps": "https://maps.app.goo.gl/4k6Ke8hLkbxEJaKJA",
+    "wa": "https://wa.me/62819442105130"
+  },
+  {
+    "code": "B5004",
+    "name": "MILENIAL PIK 2",
+    "city": "TANGERANG",
+    "region": "JABODETABEK",
+    "address": "Rukan Millenial Blok B-07, PIK 2, Tanjung Burung, Teluknaga, Tangerang Regency, Banten 15326",
+    "maps": "https://maps.app.goo.gl/M7sPAxscgdmXaKkA8\\",
+    "wa": "https://wa.me/62819442195660"
+  },
+  {
+    "code": "B5005",
+    "name": "TAMAN ASRI",
+    "city": "TANGERANG",
+    "region": "JABODETABEK",
+    "address": "Ruko Taman Asri, Jl. Taman Asri Utama Blok I No.2, RT.005/RW.012, Gaga, Kec. Larangan, Kota Tangerang, Banten 15154",
+    "maps": "https://maps.app.goo.gl/h4W5qt1xxaoff2di6",
+    "wa": "https://wa.me/62877227248060"
+  },
+  {
+    "code": "B5006",
+    "name": "PALEM SEMI",
+    "city": "TANGERANG",
+    "region": "JABODETABEK",
+    "address": "Komplek Ruko Barcelona No.75 Jl Palem Raja Karawaci, Panunggangan Bar., Kec. Cibodas, Kota Tangerang, Banten 15139",
+    "maps": "https://maps.app.goo.gl/LcEGd6ejFeMD3n7U8",
+    "wa": "https://wa.me/6281752001340"
+  },
+  {
+    "code": "B4002",
+    "name": "PUSTEK",
+    "city": "TANGERANG SELATAN",
+    "region": "JABODETABEK",
+    "address": "Jl. Raya Puspitek No.48, Buaran, Kec. Serpong, Kota Tangerang Selatan, Banten 15310",
+    "maps": "https://maps.app.goo.gl/PGc77Hcwc1tfPXgX8",
+    "wa": "https://wa.me/62819135807780"
+  },
+  {
+    "code": "B5003",
+    "name": "BENDA PAMULANG",
+    "city": "TANGERANG SELATAN",
+    "region": "JABODETABEK",
+    "address": "Ruko Pamulang Permai No.F1 /27, RT.001/RW.015, Benda Baru, Kec. Pamulang, Kota Tangerang Selatan, Banten 15433",
+    "maps": "https://maps.app.goo.gl/v7TbA6F1Xda3SAEG6",
+    "wa": "https://wa.me/62819442152380"
+  },
+  {
+    "code": "C4003",
+    "name": "IBC",
+    "city": "BANDUNG",
+    "region": "BANDUNG",
+    "address": "Plaza IBCC, Jl. A. Yani Blok D3 No.11, Kacapiring, Kec. Batununggal, Kota Bandung, Jawa Barat 40114",
+    "maps": "https://maps.app.goo.gl/agPXDAcScuzK2GrW9",
+    "wa": "https://wa.me/62859667154530"
+  },
+  {
+    "code": "C4006",
+    "name": "VETERAN",
+    "city": "BANDUNG",
+    "region": "BANDUNG",
+    "address": "Jl. Veteran No.40, Kb. Pisang, Kec. Sumur Bandung, Kota Bandung, Jawa Barat 40112",
+    "maps": "https://maps.app.goo.gl/aKefZX2Sm6Zg5HcJ8",
+    "wa": "https://wa.me/62877227247960"
+  },
+  {
+    "code": "C5010",
+    "name": "PELAJAR PEJUANG 45",
+    "city": "BANDUNG",
+    "region": "BANDUNG",
+    "address": "Jl. Pelajar Pejuang 45 No.102, Turangga, Kec. Lengkong Bandung, Jawa Barat, 40263",
+    "maps": "https://maps.app.goo.gl/71STHS7kXfCkR2Fn9",
+    "wa": "https://wa.me/62819442195630"
+  },
+  {
+    "code": "C5012",
+    "name": "CIJAGRA",
+    "city": "BANDUNG",
+    "region": "BANDUNG",
+    "address": "JL Cijagra 1 No.63 RT 006 RW 003 Cijagra Lengkong Kota Bandung, Jawa Barat, 40265",
+    "maps": "https://maps.app.goo.gl/ZFxnAVf65zxFj2Vh9",
+    "wa": "https://wa.me/62877227248130"
+  },
+  {
+    "code": "A5008",
+    "name": "MUWARDI",
+    "city": "JAKARTA BARAT",
+    "region": "JABODETABEK",
+    "address": "Jl. Muwardi No.42, RT.10/RW.4, Grogol, Kec. Grogol petamburan, Kota Jakarta Barat, Daerah Khusus Ibukota Jakarta 11450",
+    "maps": "https://maps.app.goo.gl/ER1bq46dGGZTdEqZ6",
+    "wa": "https://wa.me/62877227248160"
+  },
+  {
+    "code": "D4004",
+    "name": "ANGGREK",
+    "city": "SEMARANG",
+    "region": "SEMARANG",
+    "address": "Jl. Anggrek Raya No. 4 (Belakang Gajah Mada-Mall Citraland, Samping Anggrek Residence), Pekunden, Kec. Semarang Tengah, Kota Semarang, Jawa Tengah 50123",
+    "maps": "https://maps.app.goo.gl/v3AtV4K9rc1AFKg88",
+    "wa": "https://wa.me/62877227248340"
+  },
+  {
+    "code": "D4006",
+    "name": "BONJOL",
+    "city": "SEMARANG",
+    "region": "SEMARANG",
+    "address": "Jl. Imam Bonjol No.180H, Pendrikan Kidul, Kec. Semarang Tengah, Kota Semarang, Jawa Tengah 50131",
+    "maps": "https://maps.app.goo.gl/kbVVto9JGmv8CV777",
+    "wa": "https://wa.me/62877227248380"
+  },
+  {
+    "code": "D4003",
+    "name": "KEDUNGMUNDU",
+    "city": "SEMARANG",
+    "region": "SEMARANG",
+    "address": "Jl. Fatmawati No.3, Kedungmundu, Kec. Tembalang, Kota Semarang, Jawa Tengah 50246",
+    "maps": "https://maps.app.goo.gl/HeZmXdQbsgraGjSH6",
+    "wa": "https://wa.me/62877227248330"
+  },
+  {
+    "code": "D4007",
+    "name": "KELUD",
+    "city": "SEMARANG",
+    "region": "SEMARANG",
+    "address": "Jl. Kelud Raya 15 B , Petompon, Kec. Gajahmungkur, Kota Semarang, Jawa Tengah 50237",
+    "maps": "https://maps.app.goo.gl/TbR96fWmoXigr6H48",
+    "wa": "https://wa.me/62878540202220"
+  },
+  {
+    "code": "D4002",
+    "name": "LAMPER",
+    "city": "SEMARANG",
+    "region": "SEMARANG",
+    "address": "Jl. Lamper Tengah No.168 A-B, Pandean Lamper, Kec. Gayamsari, Kota Semarang, Jawa Tengah 50248",
+    "maps": "https://maps.app.goo.gl/UwHvpWuwEfaj1pub9",
+    "wa": "https://wa.me/62877227248320"
+  },
+  {
+    "code": "D4005",
+    "name": "PLAMONGAN",
+    "city": "SEMARANG",
+    "region": "SEMARANG",
+    "address": "Jl. Brigjen Sudiarto No. 158, Plamongan Sari, Kec. Pedurungan, Kota Semarang, Jawa Tengah 50192",
+    "maps": "https://maps.app.goo.gl/hPGAxWw9BxX4deNu6",
+    "wa": "https://wa.me/62877227248370"
+  },
+  {
+    "code": "D4001",
+    "name": "TLOGOSARI",
+    "city": "SEMARANG",
+    "region": "SEMARANG",
+    "address": "Jl. Soekarno Hatta No. 101, Tlogosari Kulon, Kec. Pedurungan, Kota Semarang, Jawa Tengah 50196",
+    "maps": "https://maps.app.goo.gl/tCGDYnHufw93yS3M8",
+    "wa": "https://wa.me/62877227248290"
+  },
+  {
+    "code": "F5001",
+    "name": "NORTHWEST",
+    "city": "SURABAYA",
+    "region": "SURABAYA",
+    "address": "Ruko Northwest Citraland, Northwest Boulevard NV2 No.53, Babat Jerawat, Kec. Pakal Kota Surabaya, Jawa Timur, 60196",
+    "maps": "https://maps.app.goo.gl/fg6K2erhzMhvSpVBA",
+    "wa": "https://wa.me/6281752001390"
+  },
+  {
+    "code": "F5002",
+    "name": "SUKOLILO",
+    "city": "SURABAYA",
+    "region": "SURABAYA",
+    "address": "Eastern Park AB, Jl. Raya Sukolilo Mulia No.A15, Keputih, Kec. Sukolilo Kota Surabaya, Jawa Timur, 60111",
+    "maps": "https://maps.app.goo.gl/afuqFY3L2G1ow8JRA",
+    "wa": "https://wa.me/6281752001370"
+  },
+  {
+    "code": "F5003",
+    "name": "BUKITMAS",
+    "city": "SURABAYA",
+    "region": "SURABAYA",
+    "address": "Ruko Wisata Bukitmas 2, Jalan Wisata Bukit Mas Blok RH No.2, Lidah Wetan, Kec. Lakarsantri Kota Surabaya, Jawa Timur, 60213",
+    "maps": "https://maps.app.goo.gl/8kavY5TdMcMnb3888",
+    "wa": "https://wa.me/6281752001400"
+  },
+  {
+    "code": "C4005",
+    "name": "ASTANA",
+    "city": "BANDUNG",
+    "region": "BANDUNG",
+    "address": "Jl. Astana Anyar Kel No.68, RT.11/RW.12, Cibadak, Kec. Astanaanyar, Kota Bandung, Jawa Barat 40241",
+    "maps": "https://maps.app.goo.gl/FFBrJtvAnQ4K6vKq6",
+    "wa": "https://wa.me/62877227247950"
+  },
+  {
+    "code": "C4007",
+    "name": "DUYUT",
+    "city": "BANDUNG",
+    "region": "BANDUNG",
+    "address": "Jl. Cibaduyut No.70, Cibaduyut, Kec. Bojongloa Kidul, Kota Bandung, Jawa Barat 40236",
+    "maps": "https://maps.app.goo.gl/KhcfbUjg9PyMHzzX6",
+    "wa": "https://wa.me/62877227247980"
+  },
+  {
+    "code": "C5017",
+    "name": "CIJAMBE",
+    "city": "BANDUNG",
+    "region": "BANDUNG",
+    "address": "Ruko Komplek Pasir Jati Cijambe, Jl. Cijambe No.49A, Pasir Endah, Kec. Ujung Berung, Kota Bandung, Jawa Barat 40619",
+    "maps": "https://maps.app.goo.gl/3weQkiLxf5S6YB9HA",
+    "wa": "https://wa.me/62877002933660"
+  },
+  {
+    "code": "C5003",
+    "name": "CANADIAN CIBUBUR",
+    "city": "BOGOR",
+    "region": "JABODETABEK",
+    "address": "Kota Wisata Ruko Canadian Broadway, Jl. Raya Kota Wisata Blok CBE No.15 Blok CB, Limus Nunggal, Kec. Cileungsi, Kabupaten Bogor, Jawa Barat 16820",
+    "maps": "https://maps.app.goo.gl/nUubmw5e7fXGTgfNA",
+    "wa": "https://wa.me/62819442200510"
+  },
+  {
+    "code": "B5008",
+    "name": "TAMAN ROYAL",
+    "city": "TANGERANG",
+    "region": "JABODETABEK",
+    "address": "Ruko Taman Royal Ruko Permata Niaga 3 No.3 Tanah Tinggi, Kec Tangerang, Kota Tangerang, Banten 15119",
+    "maps": "https://maps.app.goo.gl/G55mvXT7ue28tM8B8",
+    "wa": "https://wa.me/62877227248050"
+  },
+  {
+    "code": "A6001",
+    "name": "BENHIL",
+    "city": "JAKARTA PUSAT",
+    "region": "JABODETABEK",
+    "address": "Jl. Bendungan Hilir No.98, RT.12/RW.4, Bend. Hilir, Kecamatan Tanah Abang, Kota Jakarta Pusat, Daerah Khusus Ibukota Jakarta, 10210",
+    "maps": "https://maps.app.goo.gl/rHZzRTikB5SHfBXDA",
+    "wa": null
+  },
+  {
+    "code": "A4001",
+    "name": "BUDI RAYA",
+    "city": "JAKARTA",
+    "region": "JABODETABEK",
+    "address": null,
+    "maps": null,
+    "wa": null
+  },
+  {
+    "code": "A4002",
+    "name": "KENCANA",
+    "city": "JAKARTA",
+    "region": "JABODETABEK",
+    "address": null,
+    "maps": null,
+    "wa": null
+  },
+  {
+    "code": "A4003",
+    "name": "KEBON JERUK",
+    "city": "JAKARTA BARAT",
+    "region": "JABODETABEK",
+    "address": null,
+    "maps": null,
+    "wa": null
+  },
+  {
+    "code": "A4004",
+    "name": "KUNINGAN",
+    "city": "JAKARTA SELATAN",
+    "region": "JABODETABEK",
+    "address": null,
+    "maps": null,
+    "wa": null
+  },
+  {
+    "code": "A4005",
+    "name": "KEBAYORAN",
+    "city": "JAKARTA SELATAN",
+    "region": "JABODETABEK",
+    "address": null,
+    "maps": null,
+    "wa": null
+  },
+  {
+    "code": "A4006",
+    "name": "MUTIARA",
+    "city": "JAKARTA",
+    "region": "JABODETABEK",
+    "address": null,
+    "maps": null,
+    "wa": null
+  },
+  {
+    "code": "A4007",
+    "name": "PURI",
+    "city": "JAKARTA BARAT",
+    "region": "JABODETABEK",
+    "address": null,
+    "maps": null,
+    "wa": null
+  },
+  {
+    "code": "B4001",
+    "name": "GOLDEN",
+    "city": "TANGERANG",
+    "region": "JABODETABEK",
+    "address": null,
+    "maps": null,
+    "wa": null
+  },
+  {
+    "code": "B4003",
+    "name": "CITRA",
+    "city": "TANGERANG",
+    "region": "JABODETABEK",
+    "address": null,
+    "maps": null,
+    "wa": null
+  },
+  {
+    "code": "B4004",
+    "name": "KELAPA DUA",
+    "city": "TANGERANG",
+    "region": "JABODETABEK",
+    "address": null,
+    "maps": null,
+    "wa": null
+  },
+  {
+    "code": "B4005",
+    "name": "BOULEVARD",
+    "city": "TANGERANG",
+    "region": "JABODETABEK",
+    "address": null,
+    "maps": null,
+    "wa": null
+  },
+  {
+    "code": "B4006",
+    "name": "SUKA SARI",
+    "city": "TANGERANG",
+    "region": "JABODETABEK",
+    "address": null,
+    "maps": null,
+    "wa": null
+  },
+  {
+    "code": "C4001",
+    "name": "RAFFLES",
+    "city": "BEKASI",
+    "region": "JABODETABEK",
+    "address": null,
+    "maps": null,
+    "wa": null
+  },
+  {
+    "code": "C4004",
+    "name": "SETIABUDI",
+    "city": "BANDUNG",
+    "region": "BANDUNG",
+    "address": null,
+    "maps": null,
+    "wa": null
+  },
+  {
+    "code": "C4009",
+    "name": "KOPO",
+    "city": "BANDUNG",
+    "region": "BANDUNG",
+    "address": null,
+    "maps": null,
+    "wa": null
+  }
+]
