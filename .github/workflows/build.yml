@@ -1,35 +1,32 @@
-name: Build JSON data
+name: Convert Stock Data
 
 on:
   push:
-    branches: [main]
     paths:
       - 'stock_data.xlsx'
-      - 'data_toko.xlsx'
-      - 'convert.py'
+  workflow_dispatch:
 
 jobs:
-  build:
+  convert:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v5
+      - name: Setup Python
+        uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
       - name: Install dependencies
         run: pip install pandas openpyxl
 
-      - name: Run convert script
-        run: python convert.py
+      - name: Run converter
+        run: python3 convert.py
 
-      - name: Commit updated JSON files
+      - name: Commit JSON output
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/
-          git diff --staged --quiet || git commit -m "Update data JSON [skip ci]"
+          git add data/products.json data/stock.json data/outlets.json
+          git diff --cached --quiet || git commit -m "chore: update catalog data [$(date +'%Y-%m-%d %H:%M')]"
           git push
