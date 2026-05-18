@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>C Store — Katalog Produk</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0a0a;
+  --surface: #141414;
+  --surface2: #1e1e1e;
+  --border: #2a2a2a;
+  --accent: #c8f542;
+  --accent2: #f5c842;
+  --text: #f0f0f0;
+  --muted: #888;
+  --red: #ff4d4d;
+  --radius: 12px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  min-height: 100vh;
+}
+
+/* HEADER */
+.header {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(10,10,10,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 24px;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 60px;
+}
+.logo {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800; font-size: 20px;
+  color: var(--accent); letter-spacing: -0.5px;
+}
+.logo span { color: var(--text); }
+
+/* SEARCH */
+.search-wrap {
+  flex: 1; max-width: 420px; margin: 0 24px;
+  position: relative;
+}
+.search-wrap svg {
+  position: absolute; left: 12px; top: 50%; transform: translateY(-50%);
+  color: var(--muted); pointer-events: none;
+}
+#search-input {
+  width: 100%; height: 38px;
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: 8px; padding: 0 12px 0 38px;
+  color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 14px;
+  outline: none; transition: border-color .2s;
+}
+#search-input:focus { border-color: var(--accent); }
+#search-input::placeholder { color: var(--muted); }
+
+.header-right { color: var(--muted); font-size: 13px; }
+
+/* TABS */
+.tabs-wrap {
+  padding: 20px 24px 0;
+  border-bottom: 1px solid var(--border);
+  display: flex; gap: 4px;
+}
+.tab-btn {
+  background: none; border: none;
+  font-family: 'Syne', sans-serif; font-weight: 600; font-size: 14px;
+  color: var(--muted); cursor: pointer;
+  padding: 10px 20px;
+  border-radius: 8px 8px 0 0;
+  border-bottom: 2px solid transparent;
+  transition: all .2s;
+}
+.tab-btn:hover { color: var(--text); }
+.tab-btn.active {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+  background: var(--surface);
+}
+.tab-count {
+  background: var(--surface2); color: var(--muted);
+  font-size: 11px; font-weight: 400;
+  padding: 2px 7px; border-radius: 20px; margin-left: 6px;
+}
+.tab-btn.active .tab-count {
+  background: rgba(200,245,66,.15); color: var(--accent);
+}
+
+/* GRID */
+.main { padding: 24px; }
+.section { display: none; }
+.section.active { display: block; }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 16px;
+}
+
+/* CARD */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform .2s, border-color .2s, box-shadow .2s;
+  position: relative;
+}
+.card:hover {
+  transform: translateY(-3px);
+  border-color: #444;
+  box-shadow: 0 8px 32px rgba(0,0,0,.4);
+}
+.card-img {
+  width: 100%; aspect-ratio: 1;
+  background: var(--surface2);
+  display: flex; align-items: center; justify-content: center;
+  flex-direction: column; gap: 6px;
+  position: relative; overflow: hidden;
+}
+.card-img img {
+  width: 100%; height: 100%; object-fit: cover;
+  display: none;
+}
+.card-img img.loaded { display: block; }
+.card-placeholder {
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 8px;
+}
+.card-placeholder svg { color: #333; }
+.coming-soon {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  background: rgba(0,0,0,.75);
+  font-family: 'Syne', sans-serif;
+  font-size: 10px; font-weight: 700; letter-spacing: 1.5px;
+  color: var(--muted); text-align: center;
+  padding: 5px; text-transform: uppercase;
+}
+.stock-badge {
+  position: absolute; top: 8px; right: 8px;
+  font-size: 10px; font-weight: 600; font-family: 'Syne', sans-serif;
+  padding: 2px 8px; border-radius: 20px;
+  text-transform: uppercase; letter-spacing: .5px;
+}
+.in-stock { background: rgba(200,245,66,.15); color: var(--accent); border: 1px solid rgba(200,245,66,.3); }
+.out-stock { background: rgba(255,77,77,.1); color: var(--red); border: 1px solid rgba(255,77,77,.2); }
+
+.card-body { padding: 12px; }
+.card-name {
+  font-size: 13px; font-weight: 500; line-height: 1.4;
+  color: var(--text);
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+  overflow: hidden; margin-bottom: 4px;
+}
+.card-sub { font-size: 11px; color: var(--muted); }
+
+/* EMPTY / LOADING */
+.state-msg {
+  text-align: center; padding: 80px 24px;
+  color: var(--muted); font-size: 14px;
+}
+.state-msg svg { display: block; margin: 0 auto 16px; opacity: .3; }
+
+/* POPUP OVERLAY */
+.overlay {
+  position: fixed; inset: 0; z-index: 200;
+  background: rgba(0,0,0,.7);
+  backdrop-filter: blur(4px);
+  display: flex; align-items: center; justify-content: center;
+  padding: 24px;
+  opacity: 0; pointer-events: none;
+  transition: opacity .25s;
+}
+.overlay.open { opacity: 1; pointer-events: all; }
+
+.popup {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  width: 100%; max-width: 480px;
+  max-height: 80vh;
+  display: flex; flex-direction: column;
+  transform: translateY(16px);
+  transition: transform .25s;
+}
+.overlay.open .popup { transform: translateY(0); }
+
+.popup-header {
+  padding: 20px 20px 16px;
+  border-bottom: 1px solid var(--border);
+  display: flex; justify-content: space-between; align-items: flex-start;
+  gap: 12px;
+}
+.popup-title {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700; font-size: 16px;
+  line-height: 1.3; flex: 1;
+}
+.popup-close {
+  background: var(--surface2); border: 1px solid var(--border);
+  width: 32px; height: 32px; border-radius: 50%;
+  cursor: pointer; color: var(--muted);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; transition: color .15s;
+}
+.popup-close:hover { color: var(--text); }
+
+.popup-body { overflow-y: auto; flex: 1; }
+
+/* CITY TABS in popup */
+.city-tabs {
+  display: flex; gap: 8px; flex-wrap: wrap;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--border);
+}
+.city-btn {
+  background: var(--surface2); border: 1px solid var(--border);
+  color: var(--muted); font-family: 'DM Sans', sans-serif; font-size: 13px;
+  padding: 5px 14px; border-radius: 20px;
+  cursor: pointer; transition: all .15s;
+}
+.city-btn:hover { border-color: #555; color: var(--text); }
+.city-btn.active {
+  background: var(--accent); color: #000;
+  border-color: var(--accent); font-weight: 500;
+}
+
+/* OUTLET LIST */
+.outlet-list { padding: 12px 20px 20px; }
+.outlet-item {
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border);
+}
+.outlet-item:last-child { border-bottom: none; }
+.outlet-name {
+  font-family: 'Syne', sans-serif;
+  font-weight: 600; font-size: 14px; margin-bottom: 4px;
+}
+.outlet-addr {
+  font-size: 12px; color: var(--muted); line-height: 1.5; margin-bottom: 10px;
+}
+.outlet-links { display: flex; gap: 8px; }
+.outlet-link {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 12px; font-weight: 500;
+  padding: 4px 12px; border-radius: 6px;
+  text-decoration: none; transition: opacity .15s;
+}
+.outlet-link:hover { opacity: .8; }
+.link-wa { background: rgba(37,211,102,.15); color: #25d366; border: 1px solid rgba(37,211,102,.25); }
+.link-maps { background: rgba(66,133,244,.15); color: #4285f4; border: 1px solid rgba(66,133,244,.25); }
+
+.no-stock-msg {
+  padding: 32px 20px; text-align: center;
+  color: var(--muted); font-size: 13px;
+}
+
+/* SEARCH RESULTS HEADER */
+.results-header {
+  padding: 12px 0 16px;
+  font-size: 13px; color: var(--muted);
+}
+.results-header span { color: var(--accent); font-weight: 500; }
+
+/* RESPONSIVE */
+@media (max-width: 600px) {
+  .header { padding: 0 16px; }
+  .search-wrap { max-width: none; margin: 0 12px; }
+  .header-right { display: none; }
+  .tabs-wrap { padding: 16px 16px 0; overflow-x: auto; }
+  .main { padding: 16px; }
+  .grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
+}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="logo">C<span>Store</span></div>
+  <div class="search-wrap">
+    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+    </svg>
+    <input type="text" id="search-input" placeholder="Cari produk, brand...">
+  </div>
+  <div class="header-right" id="last-updated"></div>
+</header>
+
+<div class="tabs-wrap">
+  <button class="tab-btn active" data-tab="e-cigarette">
+    E-Cigarette <span class="tab-count" id="count-e-cigarette">0</span>
+  </button>
+  <button class="tab-btn" data-tab="cigarette">
+    Cigarette <span class="tab-count" id="count-cigarette">0</span>
+  </button>
+  <button class="tab-btn" data-tab="pregnancy">
+    Pregnancy Test <span class="tab-count" id="count-pregnancy">0</span>
+  </button>
+</div>
+
+<main class="main">
+  <div id="results-header" class="results-header" style="display:none"></div>
+  <div class="section active" id="tab-e-cigarette">
+    <div class="grid" id="grid-e-cigarette"></div>
+  </div>
+  <div class="section" id="tab-cigarette">
+    <div class="grid" id="grid-cigarette"></div>
+  </div>
+  <div class="section" id="tab-pregnancy">
+    <div class="grid" id="grid-pregnancy"></div>
+  </div>
+  <div id="tab-search" class="section">
+    <div class="grid" id="grid-search"></div>
+  </div>
+</main>
+
+<!-- STOCK POPUP -->
+<div class="overlay" id="overlay" onclick="closePopup(event)">
+  <div class="popup" id="popup">
+    <div class="popup-header">
+      <div class="popup-title" id="popup-title"></div>
+      <button class="popup-close" onclick="closePopupDirect()">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+          <path d="M18 6 6 18M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+    <div class="popup-body">
+      <div class="city-tabs" id="city-tabs"></div>
+      <div class="outlet-list" id="outlet-list"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+let products = [], stock = {}, outlets = [];
+let currentTab = 'e-cigarette', currentSearch = '';
+let popupStores = [], currentCity = null;
+
+const CITY_ORDER = ['JAKARTA PUSAT','JAKARTA BARAT','JAKARTA SELATAN','JAKARTA TIMUR','JAKARTA UTARA',
+  'TANGERANG','TANGERANG SELATAN','BEKASI','BOGOR','KARAWANG','BANDUNG','SEMARANG','SURABAYA'];
+
+async function init() {
+  const base = './data/';
+  try {
+    [products, stock, outlets] = await Promise.all([
+      fetch(base+'products.json').then(r=>r.json()),
+      fetch(base+'stock.json').then(r=>r.json()),
+      fetch(base+'outlets.json').then(r=>r.json()),
+    ]);
+    renderAll();
+    document.getElementById('last-updated').textContent = 'Data: ' + new Date().toLocaleDateString('id-ID',{day:'numeric',month:'short',year:'numeric'});
+  } catch(e) {
+    console.error('Failed to load data', e);
+  }
+}
+
+function renderAll() {
+  ['e-cigarette','cigarette','pregnancy'].forEach(cat => {
+    const catProducts = products.filter(p => p.category === cat);
+    document.getElementById('count-'+cat).textContent = catProducts.length;
+    renderGrid(document.getElementById('grid-'+cat), catProducts);
+  });
+}
+
+function renderGrid(container, prods) {
+  if (!prods.length) {
+    container.innerHTML = `<div class="state-msg" style="grid-column:1/-1">
+      <svg width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></svg>
+      Tidak ada produk
+    </div>`;
+    return;
+  }
+  container.innerHTML = prods.map(p => cardHTML(p)).join('');
+}
+
+function cardHTML(p) {
+  const hasStock = !!stock[p.code];
+  const badge = hasStock
+    ? `<span class="stock-badge in-stock">Tersedia</span>`
+    : `<span class="stock-badge out-stock">Habis</span>`;
+  const img = p.image
+    ? `<img src="${p.image}" alt="" loading="lazy" onload="this.classList.add('loaded')">`
+    : '';
+  return `<div class="card" onclick="openPopup('${p.code}')">
+    <div class="card-img">
+      ${img}
+      <div class="card-placeholder">
+        <svg width="36" height="36" fill="none" stroke="currentColor" stroke-width="1.2" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="m9 3 4 9 3-6 2 6"/></svg>
+      </div>
+      ${!p.image ? '<div class="coming-soon">Coming Soon</div>' : ''}
+      ${badge}
+    </div>
+    <div class="card-body">
+      <div class="card-name">${escHtml(p.name)}</div>
+    </div>
+  </div>`;
+}
+
+function escHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// SEARCH
+document.getElementById('search-input').addEventListener('input', function() {
+  currentSearch = this.value.trim().toLowerCase();
+  if (!currentSearch) {
+    document.getElementById('results-header').style.display = 'none';
+    showTab(currentTab);
+    return;
+  }
+  const filtered = products.filter(p =>
+    p.name.toLowerCase().includes(currentSearch) ||
+    (p.raw_name || '').toLowerCase().includes(currentSearch)
+  );
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.getElementById('tab-search').classList.add('active');
+  renderGrid(document.getElementById('grid-search'), filtered);
+  const rh = document.getElementById('results-header');
+  rh.style.display = 'block';
+  rh.innerHTML = `<span>${filtered.length}</span> produk ditemukan untuk "<span>${escHtml(currentSearch)}</span>"`;
+});
+
+// TABS
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.getElementById('search-input').value = '';
+    currentSearch = '';
+    document.getElementById('results-header').style.display = 'none';
+    showTab(btn.dataset.tab);
+  });
+});
+
+function showTab(tab) {
+  currentTab = tab;
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.getElementById('tab-'+tab).classList.add('active');
+}
+
+// POPUP
+function openPopup(code) {
+  const product = products.find(p => p.code === code);
+  if (!product) return;
+
+  document.getElementById('popup-title').textContent = product.name;
+
+  const storeCodes = (stock[code] || []).map(s => s.store_code);
+  popupStores = outlets.filter(o => storeCodes.includes(o.code));
+
+  if (!popupStores.length) {
+    document.getElementById('city-tabs').innerHTML = '';
+    document.getElementById('outlet-list').innerHTML =
+      `<div class="no-stock-msg">Produk ini saat ini tidak tersedia di toko manapun.</div>`;
+    document.getElementById('overlay').classList.add('open');
+    return;
+  }
+
+  // Build city list in order
+  const cities = [...new Set(popupStores.map(o => o.city))].sort((a,b) => {
+    const ia = CITY_ORDER.indexOf(a), ib = CITY_ORDER.indexOf(b);
+    return (ia === -1 ? 99 : ia) - (ib === -1 ? 99 : ib);
+  });
+
+  currentCity = cities[0];
+  renderCityTabs(cities);
+  renderOutlets(currentCity);
+  document.getElementById('overlay').classList.add('open');
+}
+
+function renderCityTabs(cities) {
+  document.getElementById('city-tabs').innerHTML = cities.map(c =>
+    `<button class="city-btn${c===currentCity?' active':''}" onclick="selectCity('${c}')">${titleCase(c)}</button>`
+  ).join('');
+}
+
+function selectCity(city) {
+  currentCity = city;
+  document.querySelectorAll('.city-btn').forEach(b => b.classList.toggle('active', b.textContent.trim() === titleCase(city)));
+  renderOutlets(city);
+}
+
+function renderOutlets(city) {
+  const filtered = popupStores.filter(o => o.city === city);
+  document.getElementById('outlet-list').innerHTML = filtered.map(o => {
+    const wa = o.wa ? `<a href="${o.wa}" target="_blank" class="outlet-link link-wa">
+      <svg width="13" height="13" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M11.999 2C6.477 2 2 6.477 2 12c0 1.99.574 3.846 1.57 5.413L2 22l4.703-1.531A9.96 9.96 0 0 0 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"/></svg>
+      WhatsApp
+    </a>` : '';
+    const maps = o.maps ? `<a href="${o.maps}" target="_blank" class="outlet-link link-maps">
+      <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+      Maps
+    </a>` : '';
+    const addr = o.address ? `<div class="outlet-addr">${escHtml(o.address)}</div>` : '';
+    return `<div class="outlet-item">
+      <div class="outlet-name">${escHtml(o.name)}</div>
+      ${addr}
+      <div class="outlet-links">${wa}${maps}</div>
+    </div>`;
+  }).join('');
+}
+
+function titleCase(str) {
+  return str.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(' ');
+}
+
+function closePopup(e) {
+  if (e.target === document.getElementById('overlay')) closePopupDirect();
+}
+function closePopupDirect() {
+  document.getElementById('overlay').classList.remove('open');
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closePopupDirect(); });
+
+init();
+</script>
+</body>
+</html>
