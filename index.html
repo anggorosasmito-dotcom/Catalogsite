@@ -29,18 +29,15 @@ body{background:var(--black);color:var(--cream);font-family:var(--sans);font-wei
 /* ── LOADING SCREEN ── */
 #loading-screen{
   position:fixed;inset:0;z-index:9999;background:#121212;
-  display:flex;align-items:center;justify-content:center;flex-direction:column;
-  overflow:visible;
+  display:flex;align-items:center;justify-content:center;
   transition:opacity .5s ease,visibility .5s ease;
 }
 #loading-screen.hidden{opacity:0;visibility:hidden;pointer-events:none}
 
-/* loader wrapper — fixed size, centered */
-.loader-wrap{
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  margin-top:4em;
-}
-.loader{--c:#f7971d;font-size:16px;position:relative;width:6em;height:6em;flex-shrink:0;overflow:visible}
+/* loader — position:relative dengan height cukup nampung semua fase animasi */
+.loader{--c:#f7971d;position:relative;width:12em;height:12em}
+.loader-wrap{display:contents}
+
 .ph1{
   position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
   display:flex;flex-direction:row;align-items:center;gap:8px;
@@ -112,8 +109,14 @@ body{background:var(--black);color:var(--cream);font-family:var(--sans);font-wei
 }
 @keyframes icona{20%{transform:translate(-50%,2.5em)}50%{transform:translate(-50%,.4em)}65%,to{transform:translate(-50%,2.5em)}}
 
-/* CSTORE label below loader */
-.loading-brand{display:flex;flex-direction:column;align-items:center;gap:.4rem;margin-top:7rem}
+/* CSTORE label — absolute below center, never interferes with loader sizing */
+.loading-brand{
+  position:absolute;
+  top:calc(50% + 80px);
+  left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:.4rem;
+  white-space:nowrap;pointer-events:none;
+}
 .loading-cstore{font-family:var(--display);font-size:1.8rem;letter-spacing:10px;color:#f7971d;margin-left:10px}
 .loading-label{font-family:var(--sans);font-size:.6rem;letter-spacing:5px;color:rgba(255,255,255,.3);font-weight:300}
 
@@ -622,7 +625,7 @@ body{background:var(--black);color:var(--cream);font-family:var(--sans);font-wei
     <div class="loader">
       <div class="ph1">
         <div class="record"></div>
-        <div class="record-text">Cstore</div>
+        <div class="record-text">santai</div>
       </div>
       <div class="ph2">
         <div class="laptop-b"></div>
@@ -634,7 +637,7 @@ body{background:var(--black);color:var(--cream);font-family:var(--sans);font-wei
     </div>
     <div class="loading-brand">
       <div class="loading-cstore">CSTORE</div>
-      <div class="loading-label">MEMUAT KATALOG</div>
+      <div class="loading-label">SEDANG MEMUAT KATALOG</div>
     </div>
   </div>
 </div>
