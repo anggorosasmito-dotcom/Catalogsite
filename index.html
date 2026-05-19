@@ -926,16 +926,21 @@ var userCity=null,userNearestStore=null;
 
 /* CAT LOADER */
 var _catTimer=null;
+var _catShownAt=0;
+var CAT_MIN_MS=650; /* minimum cat display time agar animasi keliatan */
 function showCatLoader(){
   var el=document.getElementById('cat-loader');
-  if(el){el.classList.add('active');el.style.pointerEvents='none'}
+  if(el){el.classList.add('active');el.style.pointerEvents='none';_catShownAt=Date.now()}
 }
-function hideCatLoader(){
+function hideCatLoader(cb){
   if(_catTimer)clearTimeout(_catTimer);
+  var elapsed=Date.now()-_catShownAt;
+  var wait=Math.max(0,CAT_MIN_MS-elapsed);
   var el=document.getElementById('cat-loader');
-  if(el){
-    _catTimer=setTimeout(function(){el.classList.remove('active')},120);
-  }
+  _catTimer=setTimeout(function(){
+    if(el)el.classList.remove('active');
+    if(cb)cb();
+  },wait);
 }
 
 /* PRODUCT IMAGE (all use this Cloudinary URL — will connect to CMS later) */
@@ -1117,7 +1122,7 @@ function renderTab(fromFilter){
   if(q){rp.textContent=filtered.length+' hasil';rp.classList.add('visible')}else{rp.classList.remove('visible')}
   document.getElementById('tabs-result').textContent=filtered.length.toLocaleString('id')+' produk'+(q?' — "'+currentSearch+'"':'');
   document.getElementById('catCount').textContent=(currentSearch||currentStock||currentVendor||currentSubcat!=='all'||currentAlpha)?filtered.length.toLocaleString('id'):PRODUCTS.filter(p=>p.category===currentCat).length.toLocaleString('id');
-  if(!filtered.length){hideCatLoader();grid.style.display='none';noRes.style.display='block';document.getElementById('pagination').className='';document.getElementById('pagination').innerHTML='';document.getElementById('pg-info').className='';return}
+  if(!filtered.length){hideCatLoader(null);grid.style.display='none';noRes.style.display='block';document.getElementById('pagination').className='';document.getElementById('pagination').innerHTML='';document.getElementById('pg-info').className='';return}
   noRes.style.display='none';filteredCache=filtered;totalPages=Math.ceil(filtered.length/ITEMS_PER_PAGE);
   if(currentPage>totalPages)currentPage=1;
   renderPage(currentPage,q);renderPagination();
@@ -1149,7 +1154,12 @@ function renderPage(page,q){
         </div>
       </div>`;
     }).join('');
-    requestAnimationFrame(function(){grid.style.opacity='1';grid.classList.remove('pg-out');grid.classList.add('pg-in');setTimeout(function(){grid.classList.remove('pg-in')},280);hideCatLoader()});
+    requestAnimationFrame(function(){
+      hideCatLoader(function(){
+        grid.style.opacity='1';grid.classList.remove('pg-out');grid.classList.add('pg-in');
+        setTimeout(function(){grid.classList.remove('pg-in')},280);
+      });
+    });
   });
 }
 
@@ -1246,7 +1256,7 @@ function openProduct(code){
         var isNearest=!!(userNearestStore&&storeName.toLowerCase().includes(userNearestStore.toLowerCase()));
         // nearest = big card always open; other same-city = collapsed; determined below
         var isCollapsed=!isNearest&&si>0;
-        return`<div class="outlet-card${isNearest?' is-nearest':''}${isCollapsed?' is-collapsed':''}"${isCollapsed?' onclick="this.classList.toggle(\'expanded\')"':''}>
+        return`<div class="outlet-card${isNearest?' is-nearest':''}${isCollapsed?' is-collapsed':''}"${isCollapsed?' onclick="toggleStore(this)"':''}>
           <div class="outlet-name">${esc(storeName)}</div>
           ${addr?`<div class="outlet-address">${esc(addr)}</div>`:''}
           ${btns?`<div class="outlet-actions">${btns}</div>`:''}
@@ -1268,7 +1278,37 @@ function openProduct(code){
   document.querySelector('.popup-info').scrollTop=0;
 }
 function findOutlet(storeName){var sn=storeName.toLowerCase();return Object.values(OUTLETS).find(function(o){var on=o.name.toLowerCase();return on===sn||on.includes(sn)||sn.includes(on)})||null}
-function toggleCity(header){var body=header.nextElementSibling,open=header.classList.contains('open');header.classList.toggle('open',!open);body.classList.toggle('open',!open)}
+
+/* toggleCity — accordion: satu kota terbuka, yang lain nutup */
+function toggleCity(header){
+  var body=header.nextElementSibling;
+  var isOpen=header.classList.contains('open');
+  /* tutup semua city di popup ini */
+  var content=document.getElementById('popupContent');
+  content.querySelectorAll('.city-header').forEach(function(h){
+    h.classList.remove('open');
+    if(h.nextElementSibling)h.nextElementSibling.classList.remove('open');
+  });
+  /* kalau tadi belum open, buka yang ini */
+  if(!isOpen){
+    header.classList.add('open');
+    body.classList.add('open');
+  }
+}
+
+/* toggleStore — accordion: satu toko collapsed terbuka per city, yang lain nutup */
+function toggleStore(el){
+  var isExpanded=el.classList.contains('expanded');
+  /* tutup semua collapsed cards di city yang sama */
+  var cityBody=el.closest('.city-body');
+  if(cityBody){
+    cityBody.querySelectorAll('.outlet-card.is-collapsed').forEach(function(c){
+      c.classList.remove('expanded');
+    });
+  }
+  /* kalau tadi belum open, buka */
+  if(!isExpanded)el.classList.add('expanded');
+}
 function closePopup(e){if(e.target===document.getElementById('overlay'))closePopupDirect()}
 function closePopupDirect(){document.getElementById('overlay').classList.remove('open');document.body.style.overflow=''}
 
@@ -1335,25 +1375,46 @@ var dataReady=false;
 var CYCLE_MS=3000;
 var TAIL_MS=500;
 
-/* LOADING AUDIO — trigger saat fase laptop muncul (~900ms) */
+/* LOADING AUDIO — play sedini mungkin */
 (function(){
   var sfx=document.getElementById('loading-sfx');
   if(!sfx)return;
   sfx.volume=0.35;
-  // Try autoplay after short delay when laptop animation starts
+  sfx.preload='auto';
   var audioPlayed=false;
+
   function tryPlaySfx(){
     if(audioPlayed)return;
     audioPlayed=true;
-    sfx.play().catch(function(){
-      // Autoplay blocked — play on first user interaction
-      var playOnce=function(){sfx.play().catch(function(){});document.removeEventListener('touchstart',playOnce);document.removeEventListener('click',playOnce);};
-      document.addEventListener('touchstart',playOnce,{once:true});
-      document.addEventListener('click',playOnce,{once:true});
-    });
+    /* Paksa load dulu baru play */
+    sfx.load();
+    var p=sfx.play();
+    if(p&&typeof p.catch==='function'){
+      p.catch(function(){
+        /* Autoplay diblokir browser — tunggu interaksi user pertama */
+        audioPlayed=false;
+        var playOnce=function(){
+          if(audioPlayed)return;
+          audioPlayed=true;
+          sfx.currentTime=0;
+          sfx.play().catch(function(){});
+          document.removeEventListener('touchstart',playOnce,true);
+          document.removeEventListener('click',playOnce,true);
+          document.removeEventListener('touchend',playOnce,true);
+        };
+        document.addEventListener('touchstart',playOnce,{once:true,capture:true});
+        document.addEventListener('click',playOnce,{once:true,capture:true});
+        document.addEventListener('touchend',playOnce,{once:true,capture:true});
+      });
+    }
   }
-  // Play ASAP, minimal delay to allow browser audio unlock
-  setTimeout(tryPlaySfx, 50);
+
+  /* Coba segera begitu script jalan */
+  tryPlaySfx();
+  /* Fallback: coba lagi setelah DOMContentLoaded kalau belum berhasil */
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded',function(){if(!audioPlayed)tryPlaySfx()});
+  }
 })();
 
 function tryHideLoading(){
