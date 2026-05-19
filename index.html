@@ -278,11 +278,9 @@ body{background:var(--black);color:var(--cream);font-family:var(--sans);font-wei
 .tab-btn.active .tab-count{color:rgba(200,169,110,.62)}
 #tabs-result{margin-left:auto;display:flex;align-items:center;flex-shrink:0;font-family:var(--serif);font-style:italic;font-size:.63rem;color:rgba(200,169,110,.2);padding:0 .5rem;white-space:nowrap}
 
-/* ── FILTER STRIP ── */
+/* ── FILTER STRIP — hidden (filter moved to popup) ── */
 #filter-strip{
-  background:rgba(12,10,9,.93);border-bottom:1px solid rgba(200,169,110,.05);
-  padding:.35rem .75rem;display:flex;align-items:center;gap:.28rem;
-  overflow-x:auto;scrollbar-width:none;
+  display:none!important;
 }
 #filter-strip::-webkit-scrollbar{display:none}
 .f-pill{
@@ -300,11 +298,9 @@ body{background:var(--black);color:var(--cream);font-family:var(--sans);font-wei
 #subcat-pills{display:flex;gap:.25rem;overflow-x:auto;scrollbar-width:none}
 #subcat-pills::-webkit-scrollbar{display:none}
 
-/* ── ALPHA FILTER (#6) ── */
+/* ── ALPHA FILTER — hidden (filter moved to popup) ── */
 #alpha-strip{
-  background:rgba(11,9,8,.9);border-bottom:1px solid rgba(200,169,110,.04);
-  padding:.25rem .75rem;display:flex;align-items:center;gap:.16rem;
-  overflow-x:auto;scrollbar-width:none;flex-wrap:nowrap;
+  display:none!important;
 }
 #alpha-strip::-webkit-scrollbar{display:none}
 .alpha-btn{
@@ -473,16 +469,15 @@ body{background:var(--black);color:var(--cream);font-family:var(--sans);font-wei
 .overlay{
   display:none;position:fixed;inset:0;z-index:500;
   background:rgba(0,0,0,.78);backdrop-filter:blur(18px) saturate(1.4);-webkit-backdrop-filter:blur(18px) saturate(1.4);
-  align-items:flex-end;justify-content:center;
+  align-items:center;justify-content:center;padding:1rem;
 }
 .overlay.open{display:flex;animation:overlayIn .2s ease}
 @keyframes overlayIn{from{opacity:0}to{opacity:1}}
-@media(min-width:600px){.overlay{align-items:center}}
 
 .popup{
   background:var(--soft-black);border:1px solid rgba(200,169,110,.12);
   border-top:2px solid rgba(200,169,110,.2);
-  border-radius:16px 16px 0 0;
+  border-radius:16px;
   width:100%;max-width:780px;max-height:92vh;overflow:hidden;
   display:flex;flex-direction:column;position:relative;
   animation:slideUp .28s cubic-bezier(.22,1,.36,1);
@@ -498,6 +493,7 @@ body{background:var(--black);color:var(--cream);font-family:var(--sans);font-wei
 .popup-img-panel{
   flex-shrink:0;overflow:hidden;
   width:100%;height:220px;background:#0d0a08;position:relative;
+  border-radius:14px 14px 0 0;
 }
 @media(min-width:600px){.popup-img-panel{width:300px;height:auto;border-radius:4px 0 0 4px}}
 .popup-img-panel img{width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.22,1,.36,1)}
@@ -515,8 +511,16 @@ body{background:var(--black);color:var(--cream);font-family:var(--sans);font-wei
   box-shadow:0 3px 10px rgba(0,0,0,.5);
 }
 
-/* info panel */
-.popup-info{flex:1;overflow-y:auto;display:flex;flex-direction:column;min-height:0}
+/* Brand ghost watermark in popup image */
+.popup-brand-ghost{
+  position:absolute;bottom:0;left:0;right:0;
+  font-family:var(--display);font-size:5.5rem;letter-spacing:8px;
+  color:rgba(255,255,255,.09);text-align:center;
+  pointer-events:none;z-index:1;line-height:1;
+  padding-bottom:.2rem;
+  text-transform:uppercase;
+  overflow:hidden;white-space:nowrap;text-overflow:clip;
+}
 .popup-header{
   position:sticky;top:0;z-index:10;
   background:rgba(20,20,20,.97);backdrop-filter:blur(16px);
@@ -553,34 +557,54 @@ body{background:var(--black);color:var(--cream);font-family:var(--sans);font-wei
 .outlet-card{padding:.58rem .82rem;border-bottom:1px solid rgba(200,169,110,.05);transition:background .15s;position:relative}
 .outlet-card:last-child{border-bottom:none}
 .outlet-card:hover{background:rgba(200,169,110,.03)}
-.outlet-card.is-nearest{background:rgba(200,169,110,.06);border-left:2px solid var(--popup-accent)}
+/* Nearest/recommended: big, actions always visible */
+.outlet-card.is-nearest{
+  background:rgba(200,169,110,.07);
+  border-left:2px solid var(--popup-accent);
+  padding:1rem 1rem 1rem .9rem;
+  margin-bottom:.3rem;
+  border-radius:0 4px 4px 0;
+}
 .outlet-card.is-nearest::before{
   content:"📍 TERDEKAT";display:block;
   font-family:var(--display);font-size:.46rem;letter-spacing:2px;
-  color:var(--popup-accent);margin-bottom:.25rem;
+  color:var(--popup-accent);margin-bottom:.38rem;
   animation:nearestBlink 1.6s ease-in-out infinite;
 }
 @keyframes nearestBlink{0%,100%{opacity:1}50%{opacity:.25}}
+.outlet-card.is-nearest .outlet-name{font-size:.82rem;color:var(--cream);margin-bottom:.22rem}
+.outlet-card.is-nearest .outlet-address{margin-bottom:.55rem}
+/* Collapsed same-city cards: name only, no address/actions unless expanded */
+.outlet-card.is-collapsed .outlet-address{display:none}
+.outlet-card.is-collapsed .outlet-actions{display:none}
+.outlet-card.is-collapsed{cursor:pointer;padding:.44rem .82rem}
+.outlet-card.is-collapsed .outlet-name{display:flex;align-items:center;justify-content:space-between;color:rgba(240,225,200,.55)}
+.outlet-card.is-collapsed .outlet-name::after{
+  content:"›";font-size:.8rem;color:rgba(200,169,110,.25);transition:transform .2s;flex-shrink:0;margin-left:.5rem;
+}
+.outlet-card.is-collapsed.expanded .outlet-name::after{transform:rotate(90deg);color:var(--gold)}
+.outlet-card.is-collapsed.expanded .outlet-address{display:block}
+.outlet-card.is-collapsed.expanded .outlet-actions{display:flex}
 .outlet-name{font-family:var(--sans);font-weight:500;font-size:.73rem;color:var(--cream);margin-bottom:.12rem;letter-spacing:.2px}
 .outlet-address{font-family:var(--sans);font-weight:300;font-size:.59rem;color:rgba(200,169,110,.3);line-height:1.5;margin-bottom:.44rem}
 .outlet-actions{display:flex;gap:.22rem;flex-wrap:wrap}
 .outlet-btn{display:inline-flex;align-items:center;gap:.28rem;padding:.22rem .52rem;border-radius:2px;font-family:var(--display);font-size:.58rem;letter-spacing:1.5px;text-decoration:none;transition:opacity .15s,transform .1s;flex-shrink:0;font-weight:600}
 .outlet-btn:hover{opacity:.82;transform:translateY(-1px)}
 .btn-wa{background:var(--wa);color:#fff}
-.btn-grab{background:#00B14F;color:#fff;display:inline-flex;align-items:center;gap:.3rem}
-.btn-grab img{height:13px;width:auto;object-fit:contain;filter:brightness(0) invert(1)}
+.btn-grab{background:#fff;color:#00B14F;display:inline-flex;align-items:center;justify-content:center;gap:.3rem;border:none;padding:.22rem .62rem}
+.btn-grab img{height:16px;width:auto;object-fit:contain}
 .btn-maps{background:rgba(200,169,110,.1);border:1.5px solid rgba(200,169,110,.25);color:var(--gold);display:inline-flex;align-items:center;gap:.28rem}
 
 /* ── MOBILE FILTER POPUP ── */
 #mobile-filter-overlay{
   display:none;position:fixed;inset:0;z-index:600;
   background:rgba(0,0,0,.75);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
-  align-items:flex-end;justify-content:center;
+  align-items:center;justify-content:center;padding:1rem;
 }
 #mobile-filter-overlay.open{display:flex;animation:overlayIn .2s ease}
 #mobile-filter-panel{
   background:#1a1612;border:1px solid rgba(200,169,110,.15);
-  border-top:2px solid rgba(200,169,110,.3);border-radius:16px 16px 0 0;
+  border-top:2px solid rgba(200,169,110,.3);border-radius:16px;
   width:100%;max-width:520px;max-height:80vh;overflow-y:auto;
   padding:0 0 2rem;
   animation:slideUp .28s cubic-bezier(.22,1,.36,1);
@@ -599,7 +623,9 @@ body{background:var(--black);color:var(--cream);font-family:var(--sans);font-wei
 .mf-pill.active{background:rgba(200,169,110,.1);border-color:var(--gold);color:var(--gold)}
 .mf-apply-btn{display:block;width:calc(100% - 2.2rem);margin:1rem 1.1rem 0;padding:.75rem;font-family:var(--display);font-size:.75rem;letter-spacing:3px;background:var(--gold);color:var(--black);border:none;border-radius:2px;cursor:pointer;transition:opacity .2s;font-weight:700}
 .mf-apply-btn:hover{opacity:.88}
-@media(min-width:1100px){#mobile-filter-overlay{display:none!important}}
+.mf-clear-btn{display:block;width:calc(100% - 2.2rem);margin:.55rem 1.1rem 0;padding:.65rem;font-family:var(--display);font-size:.7rem;letter-spacing:3px;background:transparent;color:rgba(200,169,110,.45);border:1px solid rgba(200,169,110,.15);border-radius:2px;cursor:pointer;transition:all .2s;font-weight:700}
+.mf-clear-btn:hover{color:var(--gold);border-color:rgba(200,169,110,.35)}
+/* mobile filter always available */
 
 /* Filter icon btn update */
 #filter-icon-btn{
@@ -621,6 +647,7 @@ body{background:var(--black);color:var(--cream);font-family:var(--sans);font-wei
 
 <!-- LOADING SCREEN -->
 <div id="loading-screen">
+  <audio id="loading-sfx" src="https://res.cloudinary.com/dpjw4tqqn/video/upload/v1779185644/soundreality-bubble-pop-reverb-424582_iagfwk.mp3" preload="auto" volume="0.4"></audio>
   <div class="loader-wrap">
     <div class="loader">
       <div class="ph1">
@@ -772,6 +799,7 @@ body{background:var(--black);color:var(--cream);font-family:var(--sans);font-wei
       <img id="popupImg" src="" alt="" crossorigin="anonymous" onerror="this.parentElement.style.display='none'">
       <div class="popup-img-overlay" id="popupImgOverlay"></div>
       <div class="popup-img-cat" id="popupImgCat"></div>
+      <div class="popup-brand-ghost" id="popupBrandGhost"></div>
     </div>
     <!-- RIGHT/BOTTOM: info -->
     <div class="popup-info">
@@ -812,6 +840,7 @@ body{background:var(--black);color:var(--cream);font-family:var(--sans);font-wei
       <div class="mf-pills" id="mf-vendor-pills"></div>
     </div>
     <button class="mf-apply-btn" onclick="closeMobileFilterDirect()">TERAPKAN FILTER</button>
+    <button class="mf-clear-btn" onclick="resetAll();closeMobileFilterDirect()">HAPUS FILTER</button>
   </div>
 </div>
 
@@ -1088,8 +1117,9 @@ function openProduct(code){
   imgEl.crossOrigin='anonymous';imgEl.src=PRODUCT_IMG;
   document.getElementById('popupImgPanel').style.display='block';
   if(imgEl.complete&&imgEl.naturalWidth)applyPopupAccent(imgEl);else imgEl.onload=function(){applyPopupAccent(imgEl)};
-  // Category badge
+  // Category badge + brand ghost
   document.getElementById('popupImgCat').textContent=prod.vendor||CAT_LABELS[prod.category]||prod.category;
+  document.getElementById('popupBrandGhost').textContent=prod.vendor||'';
   // Info
   document.getElementById('popupEyebrow').textContent=CAT_LABELS[prod.category]+(prod.vendor?' — '+prod.vendor:'');
   document.getElementById('popupName').textContent=prod.name;
@@ -1124,13 +1154,15 @@ function openProduct(code){
           return 0;
         });
       }
-      var cards=sortedStores.map(function(storeName){
+      var cards=sortedStores.map(function(storeName,si){
         var outlet=findOutlet(storeName),addr=outlet?outlet.address:'',wa=outlet?outlet.wa:null,grab=outlet?outlet.grab:null,maps=outlet?outlet.maps:null,btns='';
         if(wa)btns+=`<a href="${wa}" target="_blank" rel="noopener" class="outlet-btn btn-wa"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>WA</a>`;
-        if(grab)btns+=`<a href="${grab}" target="_blank" rel="noopener" class="outlet-btn btn-grab"><img src="https://res.cloudinary.com/dpjw4tqqn/image/upload/v1779180594/grab-logo-png_seeklogo-362365_uz234t.png" alt="Grab">GRAB</a>`;
+        if(grab)btns+=`<a href="${grab}" target="_blank" rel="noopener" class="outlet-btn btn-grab"><img src="https://res.cloudinary.com/dpjw4tqqn/image/upload/v1779080824/Grab_Logo_fvxdky.svg" alt="Grab"></a>`;
         if(maps)btns+=`<a href="${maps}" target="_blank" rel="noopener" class="outlet-btn btn-maps"><svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="4"/></svg>MAPS</a>`;
         var isNearest=!!(userNearestStore&&storeName.toLowerCase().includes(userNearestStore.toLowerCase()));
-        return`<div class="outlet-card${isNearest?' is-nearest':''}">
+        // nearest = big card always open; other same-city = collapsed; determined below
+        var isCollapsed=!isNearest&&si>0;
+        return`<div class="outlet-card${isNearest?' is-nearest':''}${isCollapsed?' is-collapsed':''}"${isCollapsed?' onclick="this.classList.toggle(\'expanded\')"':''}>
           <div class="outlet-name">${esc(storeName)}</div>
           ${addr?`<div class="outlet-address">${esc(addr)}</div>`:''}
           ${btns?`<div class="outlet-actions">${btns}</div>`:''}
@@ -1158,7 +1190,6 @@ function closePopupDirect(){document.getElementById('overlay').classList.remove(
 
 /* MOBILE FILTER POPUP */
 function openMobileFilter(){
-  if(window.innerWidth>=1100)return;
   buildMobileFilterPills();
   document.getElementById('mobile-filter-overlay').classList.add('open');
   document.body.style.overflow='hidden';
@@ -1186,7 +1217,7 @@ function mfSetSubcat(el,val){currentSubcat=val;currentPage=1;document.querySelec
 function mfSetVendor(el,val){currentVendor=val;currentPage=1;document.querySelectorAll('[data-mf-vendor]').forEach(b=>b.classList.toggle('active',b.dataset.mfVendor===val));document.querySelectorAll('[data-vendor]').forEach(b=>b.classList.toggle('active',b.dataset.vendor===val));renderTab()}
 
 document.getElementById('filter-icon-btn').addEventListener('click',function(){
-  if(window.innerWidth<1100){openMobileFilter()}
+  openMobileFilter();
 });
 
 /* KEYBOARD */
@@ -1219,6 +1250,27 @@ var loadStartTime=Date.now();
 var dataReady=false;
 var CYCLE_MS=3000;
 var TAIL_MS=500;
+
+/* LOADING AUDIO — trigger saat fase laptop muncul (~900ms) */
+(function(){
+  var sfx=document.getElementById('loading-sfx');
+  if(!sfx)return;
+  sfx.volume=0.35;
+  // Try autoplay after short delay when laptop animation starts
+  var audioPlayed=false;
+  function tryPlaySfx(){
+    if(audioPlayed)return;
+    audioPlayed=true;
+    sfx.play().catch(function(){
+      // Autoplay blocked — play on first user interaction
+      var playOnce=function(){sfx.play().catch(function(){});document.removeEventListener('touchstart',playOnce);document.removeEventListener('click',playOnce);};
+      document.addEventListener('touchstart',playOnce,{once:true});
+      document.addEventListener('click',playOnce,{once:true});
+    });
+  }
+  // Laptop animation starts at ~30% of 3s cycle = 900ms
+  setTimeout(tryPlaySfx, 900);
+})();
 
 function tryHideLoading(){
   if(!dataReady)return;
